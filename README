@@ -3,4 +3,12 @@ simple last.fm scrobble from the command line
 
 hg clone https://code.google.com/p/pylast/ 
 
+cd pylast
+sudo python setup.py install
+
+
+$ clobble --love "Buzzthrill - Everybody In The House (Get Some Mix)"
+loved  Everybody In The House (Get Some Mix) by Buzzthrill 
+
+
 
