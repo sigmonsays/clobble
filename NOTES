@@ -1,0 +1,6 @@
+simple last.fm scrobble from the command line
+
+
+hg clone https://code.google.com/p/pylast/ 
+
+

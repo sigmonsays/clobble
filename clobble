@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+#### 
+API_KEY = None
+API_SECRET = None
+API_USERNAME = None
+API_PASSWORD = None
+#### 
+
+import os, sys
+import pylast
+
+userconf = os.path.join(os.getenv('HOME'), '.cobblerc')
+execfile(userconf)
+
+# In order to perform a write operation you need to authenticate yourself
+username = API_USERNAME
+password_hash = pylast.md5(API_PASSWORD)
+
+_NETWORK = None
+def get_network():
+    global _NETWORK
+    if _NETWORK == None:
+        network = pylast.LastFMNetwork(api_key = API_KEY, api_secret = 
+            API_SECRET, username = username, password_hash = password_hash)
+        _NETWORK = network
+
+    return _NETWORK
+
+from optparse import OptionParser
+parser = OptionParser()
+parser.add_option("-v", "--verbose", dest="verbose", action="store_true", default=False)
+parser.add_option("-L", "--love", dest="love", action="store_true", default=False, help="Love a track")
+(options, args) = parser.parse_args()
+
+if options.love:
+    album, track = args.pop(0).split('-', 1)
+    network = get_network()
+    track = network.get_track(album, track)
+    r = track.love()
+    print "loved %s by %s" % (track.title, track.artist)
